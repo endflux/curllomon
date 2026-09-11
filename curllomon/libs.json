@@ -1,0 +1,34 @@
+[
+    {
+        "system": "Linux",
+        "machine": "i686",
+        "pointer_size": 32,
+        "libdir": "~/.local/bin/",
+        "sysname": "linux",
+        "link_type": "static",
+        "libc": "gnu",
+        "obj_name": "libcurl-impersonate.a",
+        "arch": "i386"
+    },
+    {
+        "system": "Linux",
+        "machine": "x86_64",
+        "pointer_size": 64,
+        "libdir": "~/.local/bin/",
+        "sysname": "linux",
+        "link_type": "static",
+        "libc": "gnu",
+        "obj_name": "libcurl-impersonate.a",
+        "arch": "x86_64"
+    },
+    {
+        "system": "Darwin",
+        "machine": "arm64",
+        "pointer_size": 64,
+        "libdir": "~/.local/bin/",
+        "sysname": "macos",
+        "link_type": "static",
+        "obj_name": "libcurl-impersonate.a",
+        "arch": "arm64"
+    }
+]
