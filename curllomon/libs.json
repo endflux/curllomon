@@ -7,7 +7,7 @@
         "sysname": "linux",
         "link_type": "static",
         "libc": "gnu",
-        "obj_name": "libcurl-impersonate.a",
+        "obj_name": "libcurl-ssl.a",
         "arch": "i386"
     },
     {
@@ -18,7 +18,7 @@
         "sysname": "linux",
         "link_type": "static",
         "libc": "gnu",
-        "obj_name": "libcurl-impersonate.a",
+        "obj_name": "libcurl-ssl.a",
         "arch": "x86_64"
     },
     {
@@ -28,7 +28,7 @@
         "libdir": "~/.local/bin/",
         "sysname": "macos",
         "link_type": "static",
-        "obj_name": "libcurl-impersonate.a",
+        "obj_name": "libcurl-ssl.a",
         "arch": "arm64"
     }
 ]
