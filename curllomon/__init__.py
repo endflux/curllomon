@@ -21,7 +21,11 @@ def request(
     data: Optional[Union[bytes, str]] = None,
     impersonate: Optional["BrowserTypeLiteral"] = None,
 ) -> Response:
-    """Perform a single request and return the Response."""
+    """Perform one HTTP request and return a Response.
+
+    One curl handle, created and torn down for this single call. For
+    connection/handle reuse across multiple requests, use `Session`.
+    """
     curl = ctypes.c_void_p(lib.curl_easy_init())
     if not curl.value:
         raise RuntimeError("curl_easy_init() failed")

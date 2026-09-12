@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 LIBS_JSON = ROOT / "libs.json"
-IMPERSONATE_LIBDIR = ROOT / "libcurl-ssl.a"  # fallback for platforms with no "libdir" in libs.json
+IMPERSONATE_LIBDIR = ROOT / "impersonate_libdir"
 
 CURL_GLOBAL_ALL = 3
 
@@ -16,9 +16,7 @@ def _detect_arch() -> dict:
 
     Same matching rule as scripts/build.py's detect_arch(): system + machine
     + pointer size, plus libc flavor (glibc/musl) when the entry specifies
-    one. Returns the matching entry regardless of its declared link_type —
-    _dynamic_obj_name() below derives the dynamic (ctypes-loadable) filename
-    from it either way.
+    one.
     """
     with open(LIBS_JSON) as f:
         archs = json.load(f)
@@ -41,24 +39,6 @@ def _detect_arch() -> dict:
     raise RuntimeError(f"Unsupported arch in {LIBS_JSON}: {uname}")
 
 
-def _dynamic_obj_name(arch: dict) -> str:
-    """The ctypes-loadable (dynamic) filename for this arch entry.
-
-    Ports scripts/build.py's get_obj_name(arch, "dynamic"): ctypes always
-    needs a shared library, never the static .a libs.json otherwise lists
-    for most non-Windows entries.
-    """
-    if arch.get("link_type") == "dynamic":
-        return arch["obj_name"]
-    if arch["system"] == "Darwin":
-        return "libcurl-ssl.a"
-    if arch["system"] == "Linux":
-        return "libcurl-ssl.a"
-    if arch["system"] == "Windows":
-        return "libcurl-ssl.a"
-    raise RuntimeError(f"No dynamic library name known for arch: {arch}")
-
-
 def _resolve_libdir(arch: dict) -> Path:
     """Directory to look for this arch's binary in.
 
@@ -79,7 +59,7 @@ def _resolve_libdir(arch: dict) -> Path:
 
 def _find_dylib() -> str:
     arch = _detect_arch()
-    name = _dynamic_obj_name(arch)
+    name = arch["obj_name"]
     libdir = _resolve_libdir(arch)
     path = libdir / name
     if not path.exists():
