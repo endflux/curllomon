@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 LIBS_JSON = ROOT / "libs.json"
-IMPERSONATE_LIBDIR = ROOT / "impersonate_libdir"
+IMPERSONATE_LIBDIR = ROOT / "libcurl-ssl.a"  # fallback for platforms with no "libdir" in libs.json
 
 CURL_GLOBAL_ALL = 3
 
@@ -51,11 +51,11 @@ def _dynamic_obj_name(arch: dict) -> str:
     if arch.get("link_type") == "dynamic":
         return arch["obj_name"]
     if arch["system"] == "Darwin":
-        return "libcurl-impersonate.dylib"
+        return "libcurl-ssl.a"
     if arch["system"] == "Linux":
-        return "libcurl-impersonate.so"
+        return "libcurl-ssl.a"
     if arch["system"] == "Windows":
-        return "libcurl-impersonate.dll"
+        return "libcurl-ssl.a"
     raise RuntimeError(f"No dynamic library name known for arch: {arch}")
 
 
